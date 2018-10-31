@@ -1,0 +1,20 @@
+cache:
+  paths:
+    - node_modules
+  key: "$CI_COMMIT_REF_SLUG"
+  policy: pull
+
+setup:
+  stage: setup
+  cache:
+    paths:
+      - node_modules
+    key: "$CI_COMMIT_REF_SLUG"
+    policy: push
+  only:
+    changes:
+      - package.json
+      - package-lock.json
+  script:
+    - npm config set unsafe-perm true
+    - npm ci
